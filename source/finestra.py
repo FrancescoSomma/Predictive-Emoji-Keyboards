@@ -30,7 +30,7 @@ fontStyle = tkFont.Font(family="Lucida Grande", size=20)
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
 
-background_image = tk.PhotoImage(file='background.png')
+background_image = tk.PhotoImage(file='../img/background.png')
 background_label = tk.Label(root, image=background_image)
 background_label.place(relwidth=1, relheight=1)
 
