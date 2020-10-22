@@ -1,24 +1,20 @@
 import tkinter as tk
 import tkinter.font as tkFont
 
+from source.utils import frase_corretta
+
+
 def prova (input):
     print(input)
     return input
 
-def scrivi(a):
-    print(a)
-    vuoto = '  '
-
-    if  a == '1':
-        str = 'AHAH \U0001F603 SI \U0001F44D  CIAO \U0001F64B  NO \U0001F645   \t\n' \
-              'sad \U0001F62D \t\n SPAVENTATO \U0001F631 ' \
-              '\t\n  PREGHIERA \U0001F64F	BOCCA \U0001F444 OCCHIO \U0001F440 \t\n' \
-              '\t\n 	ORECCHIO \U0001F442 GATTO \U0001F63A	TESCHIO \U0001F480	ARRABBIATO \U0001F620 NATALE \U0001F385		'
-
-        label['text'] = str
-    else:
-        label['text'] = vuoto
-
+def correzioneFrase(input):
+   corretta = frase_corretta(input)
+   print(corretta)
+   entry.delete(0,200)
+   entry.insert(0,corretta)
+   button1 =tk.Button(lower_frame, text="\U0001F603", font= fontStyle)
+   button1.place(relx=0.001, relheight=0.3, relwidth=0.3)
 
 
 
@@ -45,7 +41,7 @@ entry = tk.Entry(frame, font=40)
 
 entry.place(relwidth=0.65, relheight=1)
 
-button = tk.Button(frame, text="Invia", font=40,   command=lambda: scrivi(entry.get()))
+button = tk.Button(frame, text="Invia", font=40,   command=lambda:correzioneFrase(entry.get()))
 
 button.place(relx=0.7, relheight=1, relwidth=0.3)
 
