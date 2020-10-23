@@ -4,34 +4,43 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 import pickle
 
-def correzione(cercata):
+def leggi_dizionario():
+    file1 = open('../data/words.txt', 'r')
+    dizionario = file1.readlines()
 
-    file1 = open('../data/paroleItaliane.txt', 'r')
-    parole = file1.readlines()
-    distanzaEffettiva = len(cercata)
-    simili = ['','','']
-    distanze = [distanzaEffettiva,distanzaEffettiva,distanzaEffettiva]
-
-
-    for parola in parole:
-        distanza = lev.distance(cercata,parola)
-        m = max(distanze)
-        if distanza < m:
-            indice = distanze.index(m)
-            distanze[indice] = distanza
-            simili[indice] = parola
-
-    m = min(distanze)
-    indice = distanze.index(m)
-
-    #print(f'Iniziale: {cercata}, Simili: {simili}, Distanze: {distanze}, Piu simile: {simili[indice]}')
     file1.close()
-    return simili[indice]
+    return dizionario
+
+def correzione(cercata,dizionario):
+
+    distanzaEffettiva = 5
+    simili = ['','','','','','','','','','']
+    distanze = [distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva,distanzaEffettiva]
+
+    f=0
+    for parola in dizionario:
+        if  cercata == parola[:-1].lower():
+            f=1
+            break
+        else:
+            distanza = lev.distance(cercata,parola)
+            m = max(distanze)
+            if distanza < m:
+                indice = distanze.index(m)
+                distanze[indice] = distanza
+                simili[indice] = parola
+
+    if(f==0):
+        m = min(distanze)
+        indice = distanze.index(m)
+
+        print(f'Iniziale: {cercata}, Simili: {simili}, Distanze: {distanze}, Piu simile: {simili[indice]}')
+        return simili[indice]
+    else:
+        print(f'Parola invariata: {parola}')
+        return parola.lower()
 
 def tokenizza_frase(frase):
-
-    #scarico il pacchetto di stopword(se non presente)
-    nltk.download('stopwords')
 
     # rimuovo la punteggiatura
     rem_tok_punc = RegexpTokenizer(r'\w+')
@@ -49,26 +58,30 @@ def tokenizza_frase(frase):
 
 def frase_corretta(frase):
 
+    dizionario = leggi_dizionario()
     frase = tokenizza_frase(frase)
-    frase = [correzione(parola) for parola in frase]
-    frase_nuova = ' '.join(frase)
-    print(f'Frase corretta: {frase_nuova}')
+    frase = [correzione(parola,dizionario)[:-1] for parola in frase]
 
-def salva_modello(modello):
+    return frase
+
+def scrivi_modello(modello):
 
     with open('../data/modello','wb') as file:
         pickle.dump(modello,file)
 
-def carica_modello():
+    file.close()
+
+def leggi_modello():
 
     with open('../data/modello','rb') as file:
         modello = pickle.load(file)
 
+    file.close()
     return modello
 
+def rimuovi_punteggiatura(frase):
 
-
-
+    return frase
 
 
 

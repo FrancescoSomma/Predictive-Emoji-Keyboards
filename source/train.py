@@ -14,7 +14,7 @@ def crea_datalist():
 
     # leggo il dataset
     data = pd.DataFrame()
-    data = pd.read_csv('IMDB_Dataset.csv')
+    data = pd.read_csv('../data/IMDB_Dataset.csv')
 
     # creo una lista vuota
     data_list = list()
@@ -57,12 +57,12 @@ def training():
     modello = train_model(data_list)
 
     #salvo il modello su file
-    ut.carica_modello(modello)
+    ut.scrivi_modello(modello)
 
     fine = time.time()
     tempo = fine - inizio
 
-    print(f'Tempo impiegato: {tempo} secondi')
+    print(f'Tempo impiegato per il training: {tempo} secondi')
 
 if __name__ == "__main__":
     training()
