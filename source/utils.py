@@ -63,6 +63,21 @@ def frase_corretta(frase):
     frase = [correzione(parola,dizionario)[:-1] for parola in frase]
 
     return frase
+def frase_corretta2(frase):
+    frase.lower()
+    dizionario = leggi_dizionario()
+
+
+    frase = list(frase.split(" "))
+    parola = ""
+    i=0
+    while(i<len(frase)):
+      parola += parola.join(frase[i])
+      parola.lower()
+      frase = [correzione(parola,dizionario)[:-1] for parola in frase]
+      i=i+1
+    return frase
+
 
 def scrivi_modello(modello):
 
