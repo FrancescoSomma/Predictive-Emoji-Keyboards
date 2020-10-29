@@ -59,25 +59,10 @@ def tokenizza_frase(frase):
 def frase_corretta(frase):
 
     dizionario = leggi_dizionario()
-    frase = tokenizza_frase(frase)
-    frase = [correzione(parola,dizionario)[:-1] for parola in frase]
+    frase_tokenizzata = tokenizza_frase(frase)
+    frase = [correzione(parola,dizionario)[:-1] for parola in frase_tokenizzata]
 
-    return frase
-def frase_corretta2(frase):
-    frase.lower()
-    dizionario = leggi_dizionario()
-
-
-    frase = list(frase.split(" "))
-    parola = ""
-    i=0
-    while(i<len(frase)):
-      parola += parola.join(frase[i])
-      parola.lower()
-      frase = [correzione(parola,dizionario)[:-1] for parola in frase]
-      i=i+1
-    return frase
-
+    return frase,frase_tokenizzata
 
 def scrivi_modello(modello):
 
