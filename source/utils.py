@@ -1,8 +1,8 @@
 import Levenshtein as lev
-import nltk
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 import pickle
+import pandas as pd
 
 def leggi_dizionario():
     file1 = open('../data/words.txt', 'r')
@@ -82,6 +82,24 @@ def leggi_modello():
 def rimuovi_punteggiatura(frase):
 
     return frase
+
+def leggi_emoji():
+    df = pd.DataFrame()
+    df = pd.read_csv('../data/emoji.csv')
+
+    return df
+
+def predici(emoji_list,modello,parola):
+    for j in range(len(emoji_list['parola'])):
+        try:
+            emoji_list['similarity'][j] = modello.wv.similarity(parola,emoji_list['parola'][j])
+        except KeyError:
+            print(f'Non va')
+
+    emoji_list.sort_values(by=['similarity'], ascending=False, inplace=True)
+
+    return emoji_list.head(3)
+
 
 
 
