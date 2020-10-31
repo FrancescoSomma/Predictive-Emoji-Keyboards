@@ -3,6 +3,11 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 import pickle
 import pandas as pd
+from sklearn.manifold import TSNE
+import bokeh.plotting as bp
+from bokeh.models import HoverTool, BoxSelectTool
+from bokeh.plotting import figure, show, output_notebook, output_file
+import os
 
 def leggi_dizionario():
     file1 = open('../data/words.txt', 'r')
@@ -53,7 +58,6 @@ def tokenizza_frase(frase):
     lista_stopwords = set(stopwords.words('italian'))
     parole = [parola for parola in parole if not parola in lista_stopwords]
 
-    print(f'Lista parole: {parole}')
     return parole
 
 def frase_corretta(frase):
@@ -99,6 +103,35 @@ def predici(emoji_list,modello,parola):
     emoji_list.sort_values(by=['similarity'], ascending=False, inplace=True)
 
     return emoji_list.head(3)
+
+def costruisci_grafico(modello):
+    output_notebook()
+    grafico = bp.figure(plot_width=700, plot_height=600, title='Grafico', tools='pan,wheel_zoom,box_zoom, reset,hover',
+                        x_axis_type=None, y_axis_type=None, min_border=1)
+
+    # estraggo la lista dei vettori di parole
+    vettori = [modello[parola] for parola in list(modello.wv.vocab.keys())[:5000]]
+
+    # converto i vettori in 2d
+
+    modello_tsne = TSNE(n_components=2, verbose=1, random_state=0)
+    w2v_tsne = modello_tsne.fit_transform(vettori)
+
+    df_tsne = pd.DataFrame(w2v_tsne, columns=['x', 'y'])
+    df_tsne['words'] = list(modello.wv.vocab.keys())[:5000]
+
+    # mostro la parola corrispondente al punto su cui passo il cursore
+    grafico.scatter(x='x', y='y', source=df_tsne)
+    hover = grafico.select(dict(type=HoverTool))
+    hover.tooltips = {'word': '@words'}
+
+    output_file('../data/grafico.html')
+
+def mostra_grafico():
+
+    os.system("start ../data/grafico.html")
+
+
 
 
 
