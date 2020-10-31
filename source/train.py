@@ -64,5 +64,9 @@ def training():
 
     print(f'Tempo impiegato per il training: {tempo} secondi')
 
+    ut.costruisci_grafico(modello)
+
+
+
 if __name__ == "__main__":
     training()

@@ -3,7 +3,7 @@ import tkinter.font as tkFont
 from source import utils as ut
 from source import train as tr
 import nltk
-from source.utils import frase_corretta,leggi_emoji,predici
+from source.utils import frase_corretta,leggi_emoji,predici, mostra_grafico
 import pandas as pd
 
 
@@ -33,7 +33,7 @@ def elaboraFrase(df,modello):
     if(len(frase )<= 5):
 
       for j in range(3):
-          button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i: usaEmoji(frase,i)))
+          button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
       testo = tk.Label(lower_frame, font=fontStyle, text=parola)
       testo.grid(row=i%9, column=c)
@@ -43,7 +43,7 @@ def elaboraFrase(df,modello):
     else:
         fontStyleButton = tkFont.Font(family="Helvetica", size=12)
         for j in range(3):
-            button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyleButton,command=lambda i=i: usaEmoji(frase,i)))
+            button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyleButton,command=lambda i=i: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
         testo = tk.Label(lower_frame, font=fontStyleButton, text=parola)
         testo.grid(row=i%9, column=c)
@@ -55,9 +55,8 @@ def elaboraFrase(df,modello):
 
 
 
-def usaEmoji(frase,i):
+def usaEmoji(frase,i,emoji):
 
-    emoji = '\U0001F603'
     frase_default = entry.get()
     frase_default = frase_default.replace(frase[i], emoji)
     print(f'Frase: {frase}\nFrase default: {frase_default}')
@@ -80,8 +79,6 @@ except FileNotFoundError:
 #inizia l'applicazione
 df = leggi_emoji()
 
-print(df.head())
-
 HEIGHT = 500
 WIDTH = 600
 
@@ -99,11 +96,14 @@ frame = tk.Frame(root, bg='#80c1ff', bd=5)
 frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.1, anchor='n')
 
 entry = tk.Entry(frame, font=40)
-entry.place(relwidth=0.65, relheight=1)
+entry.grid(row=1, column=1)
 
-button = tk.Button(frame, text="Invia", font=40,   command=lambda: elaboraFrase(df,modello))
+button = tk.Button(frame, text="Invia", font=40,command=lambda: elaboraFrase(df,modello))
+button.grid(row=1, column=2)
 
-button.place(relx=0.7, relheight=1, relwidth=0.3)
+button = tk.Button(frame, text="Mostra cluster", font=40,   command=lambda: mostra_grafico())
+button.grid(row=1, column=3)
+
 
 lower_frame = tk.Frame(root, bg='#f0f0f0', bd=10)
 lower_frame.place(relx=0.5, rely=0.25, relwidth=0.75, relheight=0.6, anchor='n')
