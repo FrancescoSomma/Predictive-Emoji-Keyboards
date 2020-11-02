@@ -8,10 +8,8 @@ import time
 from source import utils as ut
 
 def crea_datalist():
-
-    #scarico il pacchetto di stopwords se non presente
+    # scarico il pacchetto di stopword(se non presente)
     nltk.download('stopwords')
-
     # leggo il dataset
     data = pd.DataFrame()
     data = pd.read_csv('../data/IMDB_Dataset.csv')
@@ -43,14 +41,13 @@ def train_model(data_list):
     # addestro il modello word2vec
     modello = gensim.models.Word2Vec(sentences=data_list, size=emb_dim, workers=4, min_count=1)
 
-    # dimensione vocabolario
-    parole = list(modello.wv.vocab)
-    print(f'Dimensione vocabolario: {len(parole)}')
+
 
     return modello
 
 def training(nuoveParole):
 
+    print('\nInizio il training..')
     inizio = time.time()
 
     data_list = crea_datalist()
@@ -62,14 +59,25 @@ def training(nuoveParole):
     #salvo il modello su file
     ut.scrivi_modello(modello)
 
-    fine = time.time()
-    tempo = fine - inizio
+    middle = time.time()
+    tempo = middle - inizio
 
+    print('\nTraining terminato')
+
+    # dimensione vocabolario
+    parole = list(modello.wv.vocab)
+    print(f'Dimensione vocabolario: {len(parole)}')
     print(f'Tempo impiegato per il training: {tempo} secondi')
 
+    print('\nCostruisco il modello grafico..')
     ut.costruisci_grafico(modello)
+    finale = time.time()
+    print(f'\nTempo totale impiegato:{finale-inizio}')
+    print("\nOperazioni terminate, pronto all'utilizzo")
+
+    return modello
 
 
 
 if __name__ == "__main__":
-    training()
+    training(nuoveParole=[])

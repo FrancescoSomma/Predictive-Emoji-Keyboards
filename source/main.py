@@ -8,7 +8,7 @@ import pandas as pd
 
 
 def elaboraFrase(df,modello):
-   emoji_list = df
+   emoji_list = df.copy()
    frase_default= entry.get()
    frase,frase_tokenizzata = frase_corretta(frase_default)
    for i in range(len(frase)):
@@ -33,7 +33,7 @@ def elaboraFrase(df,modello):
             c=5
         if(len(frase )<= 5):
 
-          for j in range(3):
+          for j in range(5):
               button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
           testo = tk.Label(lower_frame, font=fontStyle, text=parola)
@@ -41,6 +41,7 @@ def elaboraFrase(df,modello):
           button[i][0].grid(row=(i%9), column=c + 1)
           button[i][1].grid(row=(i % 9), column=c + 2)
           button[i][2].grid(row=(i % 9), column=c + 3)
+
         else:
             fontStyleButton = tkFont.Font(family="Helvetica", size=12)
             for j in range(3):
@@ -74,22 +75,34 @@ if esistone_nuove_parole():
     risposta = input('Ci sono nuove parole, vuoi aggiornare il modello? s/n ->: ')
     if risposta == 's':
         nuoveParole = leggi_nuove_parole()
+        print(f'Nuove parole: {nuoveParole}')
         f = open('../data/nuoveparole.txt','w')
-        tr.training(nuoveParole)
+        modello = tr.training(nuoveParole)
 
     else:
         #provo a leggere il modello dal file; se non esiste,lo addestro e lo scrivo su file
         try:
             modello = ut.leggi_modello()
             print('Modello gia presente')
+            num = list(modello.wv.vocab)
+            print(f'Dimensione vocabolario: {len(num)}')
         except FileNotFoundError:
-           tr.training(nuoveParole=[])
+           modello = tr.training(nuoveParole=[])
+else:
+    try:
+        modello = ut.leggi_modello()
+        print('Modello gia presente')
+        num = list(modello.wv.vocab)
+        print(f'Dimensione vocabolario: {len(num)}')
+
+    except FileNotFoundError:
+        modello = tr.training(nuoveParole=[])
 
 #inizia l'applicazione
-df = {
+dataframe = {
     'parola': ['happy','laugh','smile','wink','love','kiss','tongue','hug','think','neutral','smirk',
-               'lie','relieve','pensive','drool','sleep','mask','fever','nausea,','vomit','hot','cold',
-               'explode','cowboy','party','confuse','worried','sad,','anxious','cry','fear','disappoint','tired',
+               'lie','relieve','pensive','drool','sleep','mask','fever','nausea','vomit','hot','cold',
+               'explode','cowboy','party','confuse','worried','sad','anxious','cry','fear','disappoint','tired',
                'nervous','angry','amazing','dead','shit','clown','alien','monkey','mouth','collision','water',
                'bomb','message','hello','ok','call','yes','punch','muscle','ear','nose','brain',
                'eyes','baby','boy','girl','man','woman','student','cook','science','sing','technology',
@@ -111,6 +124,9 @@ df = {
                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                    0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
+
+df = pd.DataFrame(dataframe)
+
 HEIGHT = 500
 WIDTH = 600
 
