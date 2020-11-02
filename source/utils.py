@@ -88,16 +88,18 @@ def rimuovi_punteggiatura(frase):
     return frase
 
 def predici(emoji_list,modello,parola):
+    presente = True
     for j in range(len(emoji_list['parola'])):
         try:
             emoji_list['similarity'][j] = modello.wv.similarity(parola,emoji_list['parola'][j])
         except KeyError:
             salva_nuova_parola(parola)
             print(f'Parola {parola} non presente, lo sarà al prossimo utilizzo')
+            presente = False
 
     emoji_list.sort_values(by=['similarity'], ascending=False, inplace=True)
 
-    return emoji_list.head(3)
+    return emoji_list.head(3),presente
 
 def costruisci_grafico(modello):
     output_notebook()

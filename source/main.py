@@ -26,30 +26,31 @@ def elaboraFrase(df,modello):
    c=0
    for i in range(len(frase)):
     parola = frase[i]
-    emoji = predici(emoji_list,modello,parola)
+    emoji,presente = predici(emoji_list,modello,parola)
     button.append([])
-    if(i>8):
-        c=5
-    if(len(frase )<= 5):
+    if presente:
+        if(i>8):
+            c=5
+        if(len(frase )<= 5):
 
-      for j in range(3):
-          button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
+          for j in range(3):
+              button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
-      testo = tk.Label(lower_frame, font=fontStyle, text=parola)
-      testo.grid(row=i%9, column=c)
-      button[i][0].grid(row=(i%9), column=c + 1)
-      button[i][1].grid(row=(i % 9), column=c + 2)
-      button[i][2].grid(row=(i % 9), column=c + 3)
-    else:
-        fontStyleButton = tkFont.Font(family="Helvetica", size=12)
-        for j in range(3):
-            button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyleButton,command=lambda i=i: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
+          testo = tk.Label(lower_frame, font=fontStyle, text=parola)
+          testo.grid(row=i%9, column=c)
+          button[i][0].grid(row=(i%9), column=c + 1)
+          button[i][1].grid(row=(i % 9), column=c + 2)
+          button[i][2].grid(row=(i % 9), column=c + 3)
+        else:
+            fontStyleButton = tkFont.Font(family="Helvetica", size=12)
+            for j in range(3):
+                button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyleButton,command=lambda i=i: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
-        testo = tk.Label(lower_frame, font=fontStyleButton, text=parola)
-        testo.grid(row=i%9, column=c)
-        button[i][0].grid(row=(i % 9), column=c + 1)
-        button[i][1].grid(row=(i % 9), column=c + 2)
-        button[i][2].grid(row=(i % 9), column=c + 3)
+            testo = tk.Label(lower_frame, font=fontStyleButton, text=parola)
+            testo.grid(row=i%9, column=c)
+            button[i][0].grid(row=(i % 9), column=c + 1)
+            button[i][1].grid(row=(i % 9), column=c + 2)
+            button[i][2].grid(row=(i % 9), column=c + 3)
 
 
 
