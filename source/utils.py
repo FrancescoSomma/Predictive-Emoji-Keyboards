@@ -39,10 +39,10 @@ def correzione(cercata,dizionario):
         m = min(distanze)
         indice = distanze.index(m)
 
-        print(f'Iniziale: {cercata}, Simili: {simili}, Distanze: {distanze}, Piu simile: {simili[indice]}')
+        #print(f'Iniziale: {cercata}, Simili: {simili}, Distanze: {distanze}, Piu simile: {simili[indice]}')
         return simili[indice]
     else:
-        print(f'Parola invariata: {parola}')
+        #print(f'Parola invariata: {parola}')
         return parola.lower()
 
 def tokenizza_frase(frase):
@@ -55,7 +55,7 @@ def tokenizza_frase(frase):
     parole = [parola.lower() for parola in tokens]
 
     #rimuovo le stopwords
-    lista_stopwords = set(stopwords.words('italian'))
+    lista_stopwords = set(stopwords.words('english'))
     parole = [parola for parola in parole if not parola in lista_stopwords]
 
     return parole
@@ -92,14 +92,18 @@ def predici(emoji_list,modello,parola):
     for j in range(len(emoji_list['parola'])):
         try:
             emoji_list['similarity'][j] = modello.wv.similarity(parola,emoji_list['parola'][j])
+
+
         except KeyError:
             salva_nuova_parola(parola)
             print(f'Parola {parola} non presente, lo sarà al prossimo utilizzo')
             presente = False
+            break
 
     emoji_list.sort_values(by=['similarity'], ascending=False, inplace=True)
 
-    return emoji_list.head(3),presente
+
+    return emoji_list.head(5),presente
 
 def costruisci_grafico(modello):
     output_notebook()
@@ -130,6 +134,7 @@ def mostra_grafico():
 
 def salva_nuova_parola(parola):
 
+     print(f'Parola: {parola}')
      with open('../data/nuoveparole.txt','a') as file:
          file.write(parola + '\n')
 
@@ -149,7 +154,7 @@ def leggi_nuove_parole():
     file = open('../data/nuoveparole.txt','r')
     print('Ci sono nuove parole: ')
     for line in file:
-        nuoveParole.append(line)
+        nuoveParole.append(line[:-1])
 
     print(nuoveParole)
     file.close()
