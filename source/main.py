@@ -3,7 +3,7 @@ import tkinter.font as tkFont
 from source import utils as ut
 from source import train as tr
 import nltk
-from source.utils import frase_corretta,leggi_emoji,predici, mostra_grafico
+from source.utils import frase_corretta,predici, mostra_grafico,esistone_nuove_parole,leggi_nuove_parole
 import pandas as pd
 
 
@@ -59,7 +59,6 @@ def usaEmoji(frase,i,emoji):
 
     frase_default = entry.get()
     frase_default = frase_default.replace(frase[i], emoji)
-    print(f'Frase: {frase}\nFrase default: {frase_default}')
     entry.delete(0, tk.END)
     entry.insert(0, frase_default)
 
@@ -69,21 +68,23 @@ def usaEmoji(frase,i,emoji):
 #scarico il pacchetto di stopword(se non presente)
 nltk.download('stopwords')
 
-#provo a leggere il modello dal file; se non esiste,lo addestro e lo scrivo su file
-try:
-    modello = ut.leggi_modello()
-    print('Modello gia presente')
-except FileNotFoundError:
-   tr.training()
+#controllo se esistono nuove parole dopo l'esecuzione precedente
+if esistone_nuove_parole():
+    risposta = input('Ci sono nuove parole, vuoi aggiornare il modello? s/n ->: ')
+    if risposta == 's':
+        nuoveParole = leggi_nuove_parole()
+        f = open('../data/nuoveparole.txt','w')
+        tr.training(nuoveParole)
+
+    else:
+        #provo a leggere il modello dal file; se non esiste,lo addestro e lo scrivo su file
+        try:
+            modello = ut.leggi_modello()
+            print('Modello gia presente')
+        except FileNotFoundError:
+           tr.training(nuoveParole=[])
 
 #inizia l'applicazione
-df = {
-    'parola': [],
-    'emoji': [],
-    'similarity': []
-}
-
-df = pd.DataFrame(df)
 
 HEIGHT = 500
 WIDTH = 600

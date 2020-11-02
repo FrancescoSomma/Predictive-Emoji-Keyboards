@@ -49,11 +49,14 @@ def train_model(data_list):
 
     return modello
 
-def training():
+def training(nuoveParole):
 
     inizio = time.time()
 
     data_list = crea_datalist()
+    if nuoveParole:
+        data_list.extend(nuoveParole)
+
     modello = train_model(data_list)
 
     #salvo il modello su file

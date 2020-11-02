@@ -87,18 +87,13 @@ def rimuovi_punteggiatura(frase):
 
     return frase
 
-def leggi_emoji():
-    df = pd.DataFrame()
-    df = pd.read_csv('../data/emoji.csv')
-
-    return df
-
 def predici(emoji_list,modello,parola):
     for j in range(len(emoji_list['parola'])):
         try:
             emoji_list['similarity'][j] = modello.wv.similarity(parola,emoji_list['parola'][j])
         except KeyError:
-            print(f'Non va')
+            salva_nuova_parola(parola)
+            print(f'Parola {parola} non presente, lo sarà al prossimo utilizzo')
 
     emoji_list.sort_values(by=['similarity'], ascending=False, inplace=True)
 
@@ -130,6 +125,33 @@ def costruisci_grafico(modello):
 def mostra_grafico():
 
     os.system("start ../data/grafico.html")
+
+def salva_nuova_parola(parola):
+
+     with open('../data/nuoveparole.txt','a') as file:
+         file.write(parola + '\n')
+
+     file.close()
+
+def esistone_nuove_parole():
+
+    if os.stat('../data/nuoveparole.txt').st_size != 0:
+         return True
+    else:
+        return False
+
+
+def leggi_nuove_parole():
+
+    nuoveParole = []
+    file = open('../data/nuoveparole.txt','r')
+    print('Ci sono nuove parole: ')
+    for line in file:
+        nuoveParole.append(line)
+
+    print(nuoveParole)
+    file.close()
+    return nuoveParole
 
 
 
