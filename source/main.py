@@ -85,7 +85,31 @@ if esistone_nuove_parole():
            tr.training(nuoveParole=[])
 
 #inizia l'applicazione
-
+df = {
+    'parola': ['happy','laugh','smile','wink','love','kiss','tongue','hug','think','neutral','smirk',
+               'lie','relieve','pensive','drool','sleep','mask','fever','nausea,','vomit','hot','cold',
+               'explode','cowboy','party','confuse','worried','sad,','anxious','cry','fear','disappoint','tired',
+               'nervous','angry','amazing','dead','shit','clown','alien','monkey','mouth','collision','water',
+               'bomb','message','hello','ok','call','yes','punch','muscle','ear','nose','brain',
+               'eyes','baby','boy','girl','man','woman','student','cook','science','sing','technology',
+               'art','police','christmas','walk','train','bed','family','dog','cat','flower','tree',
+               'banana','apple','pear','tomato','bread','chocolate','drink','world','house','train','bus',
+               'taxi','school','car','moto','bike'],
+    'emoji': ['\U0001F603','\U0001F602','\U0001F604','\U0001F609','\U0001F970','\U0001F618','\U0001F61B','\U0001F917','\U0001F914','\U0001F610','\U0001F60F',
+              '\U0001F925','\U0001F60C','\U0001F614','\U0001F924','\U0001F634','\U0001F637','\U0001F912','\U0001F922','\U0001F92E','\U0001F975','\U0001F976',
+              '\U0001F92F','\U0001F920','\U0001F973','\U0001F615','\U0001F61F','\U0001F641','\U0001F630','\U0001F62D','\U0001F631','\U0001F61E','\U0001F62B',
+              '\U0001F621','\U0001F620','\U0001F929','\U0001F480','\U0001F4A9','\U0001F921','\U0001F47D','\U0001F435','\U0001F48B','\U0001F4A5','\U0001F4A6',
+              '\U0001F4A3','\U0001F4AC','\U0001F44B','\U0001F44C','\U0001F919','\U0001F44D','\U0001F44A','\U0001F4AA','\U0001F442','\U0001F443','\U0001F9E0',
+              '\U0001F440','\U0001F476','\U0001F466','\U0001F467','\U0001F468','\U0001F469','\U0001F270','\U0001F9D1','\U0001F52C','\U0001F3A4','\U0001F4BB',
+              '\U0001F3A8','\U0001F46E','\U0001F385','\U0001F6B6','\U0001F3CB','\U0001F6CC','\U0001F46A','\U0001F415','\U0001F408','\U0001F33B','\U0001F332',
+              '\U0001F34C','\U0001F34E','\U0001F350','\U0001F345','\U0001F35E','\U0001F36B','\U0001F964','\U0001F30D','\U0001F3D8','\U0001F684','\U0001F68C',
+              '\U0001F695','\U0001F3EB','\U0001F697','\U0001F3CD','\U0001F6B2'],
+    'similarity': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                   0,0,0,0,0,0,0,0,0,0,0,0,0]
+}
 HEIGHT = 500
 WIDTH = 600
 
