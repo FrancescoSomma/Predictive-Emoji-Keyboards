@@ -77,7 +77,13 @@ except FileNotFoundError:
    tr.training()
 
 #inizia l'applicazione
-df = leggi_emoji()
+df = {
+    'parola': [],
+    'emoji': [],
+    'similarity': []
+}
+
+df = pd.DataFrame(df)
 
 HEIGHT = 500
 WIDTH = 600
