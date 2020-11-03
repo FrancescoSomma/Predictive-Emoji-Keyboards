@@ -144,13 +144,13 @@ frame = tk.Frame(root, bg='#80c1ff', bd=5)
 frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.1, anchor='n')
 
 entry = tk.Entry(frame, font=40)
-entry.grid(row=1, column=1)
+entry.place(relwidth=0.65, relheight=1)
 
-button = tk.Button(frame, text="Invia", font=40,command=lambda: elaboraFrase(df,modello))
-button.grid(row=1, column=2)
+buttoninv = tk.Button(frame, text="Invia", font=40,command=lambda: elaboraFrase(df,modello))
+buttoninv.place(relx=0.68, relheight=1, relwidth=0.15)
 
-button = tk.Button(frame, text="Mostra cluster", font=40,   command=lambda: mostra_grafico())
-button.grid(row=1, column=3)
+button = tk.Button(frame, text="Mostra \nCluster", font=40,   command=lambda: mostra_grafico())
+button.place(relx=0.85, relheight=1, relwidth=0.15)
 
 
 lower_frame = tk.Frame(root, bg='#f0f0f0', bd=10)
