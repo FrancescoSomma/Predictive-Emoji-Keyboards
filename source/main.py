@@ -3,9 +3,8 @@ import tkinter.font as tkFont
 from source import utils as ut
 from source import train as tr
 import nltk
-from source.utils import frase_corretta,predici, mostra_grafico,esistone_nuove_parole,leggi_nuove_parole
+from source.utils import frase_corretta,predici, mostra_grafico,esistone_nuove_parole,leggi_nuove_parole,salva_nuova_frase
 import pandas as pd
-
 
 def elaboraFrase(df,modello):
    emoji_list = df.copy()
@@ -24,37 +23,40 @@ def elaboraFrase(df,modello):
            button.destroy()
 
    c=0
+   scrivi = False
    for i in range(len(frase)):
-    parola = frase[i]
-    emoji,presente = predici(emoji_list,modello,parola)
-    button.append([])
-    if presente:
-        if(i>8):
-            c=5
-        if(len(frase )<= 5):
+        parola = frase[i]
+        emoji,presente = predici(emoji_list,modello,parola)
+        button.append([])
+        if presente:
+            if(i>8):
+                c=5
+            if(len(frase )<= 5):
 
-          for j in range(5):
-              button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
+              for j in range(5):
+                  button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
-          testo = tk.Label(lower_frame, font=fontStyle, text=parola)
-          testo.grid(row=i%9, column=c)
-          button[i][0].grid(row=(i%9), column=c + 1)
-          button[i][1].grid(row=(i % 9), column=c + 2)
-          button[i][2].grid(row=(i % 9), column=c + 3)
+              testo = tk.Label(lower_frame, font=fontStyle, text=parola)
+              testo.grid(row=i%9, column=c)
+              button[i][0].grid(row=(i%9), column=c + 1)
+              button[i][1].grid(row=(i % 9), column=c + 2)
+              button[i][2].grid(row=(i % 9), column=c + 3)
 
-        else:
-            fontStyleButton = tkFont.Font(family="Helvetica", size=12)
-            for j in range(3):
-                button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyleButton,command=lambda i=i: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
+            else:
+                fontStyleButton = tkFont.Font(family="Helvetica", size=12)
+                for j in range(3):
+                    button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyleButton,command=lambda i=i: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
-            testo = tk.Label(lower_frame, font=fontStyleButton, text=parola)
-            testo.grid(row=i%9, column=c)
-            button[i][0].grid(row=(i % 9), column=c + 1)
-            button[i][1].grid(row=(i % 9), column=c + 2)
-            button[i][2].grid(row=(i % 9), column=c + 3)
+                testo = tk.Label(lower_frame, font=fontStyleButton, text=parola)
+                testo.grid(row=i%9, column=c)
+                button[i][0].grid(row=(i % 9), column=c + 1)
+                button[i][1].grid(row=(i % 9), column=c + 2)
+                button[i][2].grid(row=(i % 9), column=c + 3)
 
+        else: scrivi = True
 
-
+   if scrivi:
+       salva_nuova_frase(frase)
 
 
 def usaEmoji(frase,i,emoji):
@@ -64,16 +66,14 @@ def usaEmoji(frase,i,emoji):
     entry.delete(0, tk.END)
     entry.insert(0, frase_default)
 
-
-
-
 #scarico il pacchetto di stopword(se non presente)
 nltk.download('stopwords')
 
 #controllo se esistono nuove parole dopo l'esecuzione precedente
 if esistone_nuove_parole():
+
     risposta = input('Ci sono nuove parole, vuoi aggiornare il modello? s/n ->: ')
-    if risposta == 's':
+    if risposta== 's':
         nuoveParole = leggi_nuove_parole()
         print(f'Nuove parole: {nuoveParole}')
         f = open('../data/nuoveparole.txt','w')
