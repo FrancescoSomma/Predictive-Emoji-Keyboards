@@ -95,7 +95,7 @@ def predici(emoji_list,modello,parola):
 
 
         except KeyError:
-            salva_nuova_parola(parola)
+
             print(f'Parola {parola} non presente, lo sarà al prossimo utilizzo')
             presente = False
             break
@@ -132,11 +132,12 @@ def mostra_grafico():
 
     os.system("start ../data/grafico.html")
 
-def salva_nuova_parola(parola):
+def salva_nuova_frase(frase):
 
-     print(f'Parola: {parola}')
+     print(f'Frase: {frase}')
+     fraseStringa = ' '.join(frase)
      with open('../data/nuoveparole.txt','a') as file:
-         file.write(parola + '\n')
+         file.write(fraseStringa + '\n')
 
      file.close()
 
@@ -152,11 +153,9 @@ def leggi_nuove_parole():
 
     nuoveParole = []
     file = open('../data/nuoveparole.txt','r')
-    print('Ci sono nuove parole: ')
     for line in file:
-        nuoveParole.append(line[:-1])
+        nuoveParole.append(line.split())
 
-    print(nuoveParole)
     file.close()
     return nuoveParole
 
