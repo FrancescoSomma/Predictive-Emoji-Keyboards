@@ -1,5 +1,7 @@
 # Predictive-Emoji-Keyboard
 **Membri del gruppo**: Somma Francesco 681735, Paparella Leonardo 682008
+<br> **Link Repository:** https://github.com/FrancescoSomma/Predictive-Emoji-Keyboards
+<br><br>
 
 Il progetto consiste in una piccola applicazione capace di consigliare emoji data una frase in input.
 Nello specifico,l'applicazione funziona con frasi in lingua inglese.
@@ -60,4 +62,3 @@ data
 * _Levenshtein_ per la funzione di correzione sintattica
 * _Pickle, os_ e _time_ per utilities
 * _Sklearn_ e _bokeh_ per la creazione del grafico
-
