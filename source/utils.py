@@ -103,7 +103,7 @@ def predici(emoji_list,modello,parola):
     emoji_list.sort_values(by=['similarity'], ascending=False, inplace=True)
 
 
-    return emoji_list.head(5),presente
+    return emoji_list.head(3),presente
 
 def costruisci_grafico(modello):
     output_notebook()
