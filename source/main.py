@@ -11,7 +11,7 @@ def elaboraFrase(df,modello):
    frase_default= entry.get()
    frase,frase_tokenizzata = frase_corretta(frase_default)
    for i in range(len(frase)):
-       frase_default = frase_default.replace(frase_tokenizzata[i],frase[i])
+       frase_default = frase_default.lower().replace(frase_tokenizzata[i],frase[i])
    entry.delete(0,tk.END)
    entry.insert(0,frase_default)
 
@@ -33,7 +33,7 @@ def elaboraFrase(df,modello):
                 c=5
             if(len(frase )<= 5):
 
-              for j in range(5):
+              for j in range(3):
                   button[i].append(tk.Button(lower_frame, text=emoji['emoji'].iloc[j], font=fontStyle, command=lambda i=i,j=j,emoji=emoji: usaEmoji(frase,i,emoji['emoji'].iloc[j])))
 
               testo = tk.Label(lower_frame, font=fontStyle, text=parola)
@@ -57,7 +57,6 @@ def elaboraFrase(df,modello):
 
    if scrivi:
        salva_nuova_frase(frase)
-
 
 def usaEmoji(frase,i,emoji):
 
