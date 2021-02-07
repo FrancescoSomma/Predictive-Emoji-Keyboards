@@ -1,5 +1,5 @@
 # Predictive-Emoji-Keyboard
-**Membri del gruppo**: Somma Francesco 681735, Paparella Leonardo 682008
+**Membri del gruppo**: Somma Francesco 681735
 <br> **Link Repository:** https://github.com/FrancescoSomma/Predictive-Emoji-Keyboards
 <br><br>
 
