@@ -55,7 +55,7 @@ data
 **Valutazione**<br>
 La valutazione è stata effettuata prendendo in considerazione un insieme di test composto da 20 frasi.
 Per ogni frase, è stato assegnato 1 punto per ogni parola per cui è stata predetta un emoji corretta ed è stat calcolata l'accuracy.
-Infine è stata calcolata l'accuracy media tra tutte le frasi ottenendo un valore di 0,605.
+Infine è stata calcolata l'accuracy media tra tutte le frasi ottenendo un valore di 0,65.
 Per migliorare questo valore sarebbe opportuno effettuare diverse operazioni,come: eliminare i nomi di persona nella fase di pre-processing,inserire una soglia per la similarità di circa 0,5 e ampliare il dataset delle emoji per aumentare il numero di topic ricoperti.
 
 **Librerie utilizzate**
